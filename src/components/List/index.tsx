@@ -1,33 +1,23 @@
-import React from 'react';
-import style from './List.module.scss';
-import { Item } from '../List/Item';
+import style from "./List.module.scss";
+import Item from "../List/Item";
+import { IWorkItem } from "../../types/workItem";
 
-function List() {
-  const workItens = [{
-    item: 'React',
-    time: '02:00:00'
-  },{
-    item: 'Typescript',
-    time: '01:00:00'
-  },{
-    item: 'Culinária',
-    time: '04:00:00'
-  }];
+interface Props {
+  workItens: IWorkItem[];
+  selectWorkItem: (workItemSelected: IWorkItem) => void;
+}
 
+function List({ workItens, selectWorkItem }: Props) {
   return (
     <aside className={style.listaTarefas}>
       <h2>Estudos do dia</h2>
       <ul>
-        {workItens.map((key, index) => (
-          <Item
-            key={index}
-            tarefa={key.item}
-            tempo={key.time}
-          />
+        {workItens.map((item) => (
+          <Item selectWorkItem={selectWorkItem} key={item.id} {...item} />
         ))}
       </ul>
     </aside>
-  )
+  );
 }
 
 export default List;

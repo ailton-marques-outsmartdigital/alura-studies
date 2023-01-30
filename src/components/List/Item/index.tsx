@@ -1,18 +1,36 @@
-import React from 'react';
-import style from '../../List/List.module.scss'
+import React from "react";
+import { IWorkItem } from "../../../types/workItem";
+import style from "../../List/List.module.scss";
 
-export function Item({ tarefa, tempo }: { tarefa: string, tempo: string }) {
+interface Props extends IWorkItem {
+  selectWorkItem: (workItemSelected: IWorkItem) => void;
+}
+
+export default function Item({
+  item,
+  time,
+  selected,
+  completed,
+  id,
+  selectWorkItem,
+}: Props) {
   // const { tarefa, tempo } = props;
 
   return (
-    <li className={style.item}>
-    <h3>
-      {tarefa}
-    </h3>
-    <span>
-      {tempo}
-    </span>
-  </li>
-  )
+    <li
+      className={`${style.item} ${selected ? style.itemSelecionado : ""}`}
+      onClick={() =>
+        selectWorkItem({
+          item,
+          time,
+          selected,
+          completed,
+          id,
+        })
+      }
+    >
+      <h3>{item}</h3>
+      <span>{time}</span>
+    </li>
+  );
 }
-
