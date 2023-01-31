@@ -19,11 +19,29 @@ function App() {
     );
   }
 
+  function releaseWorkItem() {
+    if (selected) {
+      setSelected(undefined);
+      setWorkItens((workItensOld) =>
+        workItensOld.map((item) => {
+          if (item.id === selected.id) {
+            return {
+              ...item,
+              selected: false,
+              completed: true,
+            };
+          }
+          return item;
+        })
+      );
+    }
+  }
+
   return (
     <div className={style.AppStyle}>
       <Form setWorkItens={setWorkItens} />
       <List workItens={workItens} selectWorkItem={selectWorkItem} />
-      <Cronometro />
+      <Cronometro selected={selected} releaseWorkItem={releaseWorkItem} />
     </div>
   );
 }
